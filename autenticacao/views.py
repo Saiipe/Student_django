@@ -1,10 +1,20 @@
 from django.shortcuts import render
+from django.http.response import HttpResponse
+from .models import Pessoa
 
 
 def cadastro(request):
     if request.method == "GET":
-        pessoa: dict = {'nome': "Tauan Sãáé",
-                        'idade': 20,
-                        'profissao': "DEV"}
+        return render(request, 'index.html')
+    elif request.method == "POST":
+        nome = request.POST.get("nome")
+        email = request.POST.get("email")
+        senha = request.POST.get("senha")
 
-        return render(request, 'index.html', {'pessoa': pessoa})
+        pessoa = Pessoa(nome=nome,
+                        email=email,
+                        senha=senha)
+
+        pessoa.save()
+
+        return HttpResponse("é")
